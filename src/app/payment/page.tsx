@@ -23,7 +23,7 @@ const paymentSchema = z.object({
     }),
     buyer_addr: z.string().optional(),
     pay_method: z.string().refine((val) => ["card", "bank"].includes(val), {
-        message: "납부 방법을 선택해주세요.",
+        message: "납부 방법을 선택해주세요. ",
     }),
     agreement: z.boolean().refine((val) => val === true, "개인정보이용 및 서비스 이용약관에 동의해야 합니다."),
 }).refine((data) => {
