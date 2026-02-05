@@ -21,6 +21,7 @@
 - [x] Analyzed existing project structure (`next-web`, `ce-server`).
 - [x] Established `RULES.md`, `SKILLS.md`, and `implementation_plan.md`.
 - [x] Initialized `next16-web` (Frontend) and `homepage-server` (Backend).
+- [x] Connected frontend and backend projects to GitHub repositories (`master` branch).
 - [x] Migrated `schema.prisma` and resolved Prisma 7 ESM compatibility.
 - [x] Implemented Automated Modular Schema system in `homepage-server`.
 - [x] Ported core backend logic: `Board`, `Payment`, `Tracking`.
@@ -29,4 +30,13 @@
 
 ## 4. Current Status
 - **Phase**: **Frontend (Phase 1) Implementation - Page by Page**.
-- **Next Task**: Migrating **Introduction** (벼랑영어?) page.
+- [x] Migrated **Course** (과정안내) page.
+- [x] Migrated **Review** (수강효과) page with dynamic GraphQL data.
+- [x] Migrated **Requirement** (수강요건) page.
+
+## 4. Current Status
+- **Phase**: **Frontend (Phase 1) Implementation - Page by Page**.
+- [x] Migrated **Board Write/View** functionality completely.
+- [x] Migrated **Enrollment** (수강신청) page.
+- [ ] Migrated **Payment** page (Refactored to Hook Form v7 + Zod, PortOne Removed).
+- **Next Task**: **Payment** completion page.
