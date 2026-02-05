@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ApolloWrapper } from "@/lib/apollo/ApolloWrapper";
@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 import { Check, Loader2, AlertCircle } from "lucide-react";
-import Image from "next/image";
+
 import Link from "next/link"; // Link import 추가
 
 // Zod Schema Definition
@@ -18,12 +18,12 @@ const paymentSchema = z.object({
     buyer_name: z.string().min(1, "성명을 입력해주십시오."),
     buyer_tel: z.string().min(10, "휴대폰 번호를 입력해주십시오.").max(13, "10~11자리 이하로 입력해주십시오."),
     buyer_email: z.string().email("이메일을 입력해주십시오."),
-    klass: z.enum([ENROLLMENT_CONSTANTS.KLASS.A, ENROLLMENT_CONSTANTS.KLASS.B, ENROLLMENT_CONSTANTS.KLASS.C], {
-        errorMap: () => ({ message: "수강방식을 선택해주십시오." }),
+    klass: z.string().refine((val) => Object.values(ENROLLMENT_CONSTANTS.KLASS).includes(val), {
+        message: "수강방식을 선택해주십시오.",
     }),
     buyer_addr: z.string().optional(),
-    pay_method: z.enum(["card", "bank"], {
-        errorMap: () => ({ message: "납부 방법을 선택해주세요." }),
+    pay_method: z.string().refine((val) => ["card", "bank"].includes(val), {
+        message: "납부 방법을 선택해주세요.",
     }),
     agreement: z.boolean().refine((val) => val === true, "개인정보이용 및 서비스 이용약관에 동의해야 합니다."),
 }).refine((data) => {
@@ -86,7 +86,6 @@ export default function PaymentPage() {
 
     const {
         register,
-        control,
         handleSubmit,
         watch,
         setValue,
