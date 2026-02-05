@@ -73,7 +73,7 @@ export default function CoursePage() {
 
                                 <div className="relative w-full max-w-2xl aspect-[2/1] bg-gray-100 rounded-lg overflow-hidden">
                                     <Image
-                                        src="/image/course_7.png"
+                                        src="/course_7.png"
                                         alt="Core Principles Diagram"
                                         fill
                                         className="object-contain"

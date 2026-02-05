@@ -54,7 +54,7 @@ export default function RequirementPage() {
                                     <div className="text-sm text-gray-500 mb-2">[벼랑영어 수강자 연령별 분포 평균]</div>
                                     <div className="relative w-full max-w-xl mx-auto aspect-[1.65]">
                                         <Image
-                                            src="/image/chart01.jpg"
+                                            src="/images/chart01.jpg"
                                             alt="수강자 연령별 분포"
                                             fill
                                             className="object-contain"
@@ -92,7 +92,7 @@ export default function RequirementPage() {
                                     <div className="text-sm text-gray-500 mb-2">[벼랑영어 수강자 직업군 분포]</div>
                                     <div className="relative w-full max-w-xl mx-auto aspect-[1.65]">
                                         <Image
-                                            src="/image/chart02.jpg"
+                                            src="/images/chart02.jpg"
                                             alt="수강자 직업군 분포"
                                             fill
                                             className="object-contain"
@@ -128,7 +128,7 @@ export default function RequirementPage() {
                                     <div className="text-sm text-gray-500 mb-2">[수강 전 실력에 따른 과제 평일소요시간 개념도]</div>
                                     <div className="relative w-full max-w-xl mx-auto aspect-[1.65]">
                                         <Image
-                                            src="/image/chart03.jpg"
+                                            src="/images/chart03.jpg"
                                             alt="수강 전 실력 분포"
                                             fill
                                             className="object-contain"
