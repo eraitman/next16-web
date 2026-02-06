@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
         if (result.errors) {
             console.error('GraphQL errors:', result.errors);
             return NextResponse.redirect(
-                `${req.nextUrl.origin}/payment?error=${encodeURIComponent('결제 검증 중 오류가 발생했습니다.')}`,
+                `${baseUrl}/payment?error=${encodeURIComponent('결제 검증 중 오류가 발생했습니다.')}`,
                 303
             );
         }
@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
         });
 
         return NextResponse.redirect(
-            `${req.nextUrl.origin}/payment/complete?${params.toString()}`,
+            `${baseUrl}/payment/complete?${params.toString()}`,
             303
         );
 
