@@ -530,8 +530,8 @@ function PaymentFormContent() {
                         <input type="hidden" name="buyername" value={pgData?.buyername || ""} />
                         <input type="hidden" name="buyertel" value={pgData?.buyertel || ""} />
                         <input type="hidden" name="buyeremail" value={pgData?.buyeremail || ""} />
-                        <input type="hidden" name="returnUrl" value={typeof window !== 'undefined' ? `${window.location.origin}/api/payment/pc/callback` : ""} />
-                        <input type="hidden" name="closeUrl" value={typeof window !== 'undefined' ? `${window.location.origin}/api/payment/pc/close` : ""} />
+                        <input type="hidden" name="returnUrl" value={typeof window !== 'undefined' ? `${process.env.NEXT_PUBLIC_CLIENT_URL || window.location.origin}/api/payment/pc/callback` : ""} />
+                        <input type="hidden" name="closeUrl" value={typeof window !== 'undefined' ? `${process.env.NEXT_PUBLIC_CLIENT_URL || window.location.origin}/api/payment/pc/close` : ""} />
                         <input type="hidden" name="acceptmethod" value="HPP(1):centerCd(Y)" />
                         <input type="hidden" name="merchantData" value={pgData ? `${pgData.oid}|${encodeURIComponent(pgData.buyername)}|${pgData.buyertel}|${pgData.buyeremail}|${watchKlass}|true` : ""} />
                     </form>
@@ -545,8 +545,8 @@ function PaymentFormContent() {
                         <input type="hidden" name="P_UNAME" value={pgData?.buyername || ""} />
                         <input type="hidden" name="P_MOBILE" value={pgData?.buyertel || ""} />
                         <input type="hidden" name="P_EMAIL" value={pgData?.buyeremail || ""} />
-                        <input type="hidden" name="P_NEXT_URL" value={typeof window !== 'undefined' ? `${window.location.origin}/api/payment/mobile/callback` : ""} />
-                        <input type="hidden" name="P_NOTI_URL" value={typeof window !== 'undefined' ? `${window.location.origin}/api/payment/mobile/noti` : ""} />
+                        <input type="hidden" name="P_NEXT_URL" value={typeof window !== 'undefined' ? `${process.env.NEXT_PUBLIC_CLIENT_URL || window.location.origin}/api/payment/mobile/callback` : ""} />
+                        <input type="hidden" name="P_NOTI_URL" value={typeof window !== 'undefined' ? `${process.env.NEXT_PUBLIC_CLIENT_URL || window.location.origin}/api/payment/mobile/noti` : ""} />
                         <input type="hidden" name="P_TIMESTAMP" value={pgData?.P_TIMESTAMP || ""} />
                         <input type="hidden" name="P_CHKFAKE" value={pgData?.P_CHKFAKE || ""} />
                         <input type="hidden" name="P_RESERVED" value="centerCd=Y&amt_hash=Y" />
