@@ -77,7 +77,7 @@ const CREATE_ORDER = gql`
   }
 `;
 
-export default function PaymentPage() {
+function PaymentFormContent() {
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -163,197 +163,204 @@ export default function PaymentPage() {
     };
 
     return (
-        <ApolloWrapper>
-            <div className="bg-gray-50 min-h-screen py-10 md:py-20">
-                <div className="container mx-auto px-4 max-w-3xl">
-                    <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+        <div className="bg-gray-50 min-h-screen py-10 md:py-20">
+            <div className="container mx-auto px-4 max-w-3xl">
+                <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
 
-                        {/* Header */}
-                        <div className="bg-brand-black p-8 text-center">
-                            <h1 className="text-3xl font-black text-white tracking-tight">수강등록 신청서</h1>
-                            <p className="text-gray-400 text-sm mt-2">정확한 정보 입력을 부탁드립니다</p>
+                    {/* Header */}
+                    <div className="bg-brand-black p-8 text-center">
+                        <h1 className="text-3xl font-black text-white tracking-tight">수강등록 신청서</h1>
+                        <p className="text-gray-400 text-sm mt-2">정확한 정보 입력을 부탁드립니다</p>
+                    </div>
+
+                    <div className="p-8 md:p-12 space-y-10">
+
+                        {/* Input Group: Name */}
+                        <div className="space-y-4">
+                            <label className="block text-sm font-bold text-gray-700">
+                                수강자명 (반드시 수강자 본인의 본명) <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                {...register("buyer_name")}
+                                type="text"
+                                placeholder="예시) 홍길동"
+                                className="w-full md:w-1/2 p-3 border border-gray-300 rounded focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all placeholder-gray-300"
+                            />
+                            {errors.buyer_name && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.buyer_name.message}</p>}
                         </div>
 
-                        <div className="p-8 md:p-12 space-y-10">
+                        {/* Input Group: Tel */}
+                        <div className="space-y-4">
+                            <label className="block text-sm font-bold text-gray-700">
+                                휴대폰 번호 <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                {...register("buyer_tel")}
+                                onChange={handlePhoneChange}
+                                type="text"
+                                placeholder="예시) 010-0000-0000"
+                                maxLength={13}
+                                className="w-full md:w-1/2 p-3 border border-gray-300 rounded focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all placeholder-gray-300"
+                            />
+                            {errors.buyer_tel && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.buyer_tel.message}</p>}
+                        </div>
 
-                            {/* Input Group: Name */}
-                            <div className="space-y-4">
-                                <label className="block text-sm font-bold text-gray-700">
-                                    수강자명 (반드시 수강자 본인의 본명) <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    {...register("buyer_name")}
-                                    type="text"
-                                    placeholder="예시) 홍길동"
-                                    className="w-full md:w-1/2 p-3 border border-gray-300 rounded focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all placeholder-gray-300"
-                                />
-                                {errors.buyer_name && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.buyer_name.message}</p>}
-                            </div>
+                        {/* Input Group: Email */}
+                        <div className="space-y-4">
+                            <label className="block text-sm font-bold text-gray-700">
+                                이메일 (상시확인 가능한 메일) <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                {...register("buyer_email")}
+                                type="email"
+                                placeholder="예시) hi@cliffenglish.com"
+                                className="w-full md:w-1/2 p-3 border border-gray-300 rounded focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all placeholder-gray-300"
+                            />
+                            {errors.buyer_email && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.buyer_email.message}</p>}
+                        </div>
 
-                            {/* Input Group: Tel */}
-                            <div className="space-y-4">
-                                <label className="block text-sm font-bold text-gray-700">
-                                    휴대폰 번호 <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    {...register("buyer_tel")}
-                                    onChange={handlePhoneChange}
-                                    type="text"
-                                    placeholder="예시) 010-0000-0000"
-                                    maxLength={13}
-                                    className="w-full md:w-1/2 p-3 border border-gray-300 rounded focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all placeholder-gray-300"
-                                />
-                                {errors.buyer_tel && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.buyer_tel.message}</p>}
-                            </div>
+                        <hr className="border-gray-100" />
 
-                            {/* Input Group: Email */}
-                            <div className="space-y-4">
-                                <label className="block text-sm font-bold text-gray-700">
-                                    이메일 (상시확인 가능한 메일) <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    {...register("buyer_email")}
-                                    type="email"
-                                    placeholder="예시) hi@cliffenglish.com"
-                                    className="w-full md:w-1/2 p-3 border border-gray-300 rounded focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all placeholder-gray-300"
-                                />
-                                {errors.buyer_email && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.buyer_email.message}</p>}
-                            </div>
-
-                            <hr className="border-gray-100" />
-
-                            {/* Input Group: Class Selection */}
-                            <div className="space-y-4">
-                                <label className="block text-sm font-bold text-gray-700">
-                                    수강방식 선택 <span className="text-red-500">*</span>
-                                </label>
-                                <div className="space-y-3">
-                                    {/* Class A (Video 3월) */}
-                                    <label className={`flex items-center p-4 border rounded cursor-pointer transition-all ${watchKlass === ENROLLMENT_CONSTANTS.KLASS.B ? "border-brand-blue bg-blue-50/50 ring-1 ring-brand-blue" : "border-gray-200 hover:border-gray-300"}`}>
-                                        <input
-                                            {...register("klass")}
-                                            type="radio"
-                                            value={ENROLLMENT_CONSTANTS.KLASS.B}
-                                            className="w-4 h-4 text-brand-blue border-gray-300 focus:ring-brand-blue"
-                                        />
-                                        <span className="ml-3 text-sm font-medium text-gray-700 font-bold">[A] 영상반 (3월 개강)</span>
-                                    </label>
-
-                                    {/* Class B (Offline) - Disabled Style but maintained for text consistency */}
-                                    <label className="flex items-center p-4 border border-gray-100 rounded bg-gray-50 opacity-60 cursor-not-allowed">
-                                        <input
-                                            type="radio"
-                                            disabled
-                                            className="w-4 h-4 text-gray-300 border-gray-200"
-                                        />
-                                        <span className="ml-3 text-sm text-gray-400">[B] 출석반 <sup className="text-red-400 font-bold">(*2026년 3월 모집예정)</sup></span>
-                                    </label>
-                                </div>
-                                {errors.klass && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.klass.message}</p>}
-                            </div>
-
-                            {/* Input Group: Open Date Confirm */}
-                            <div className="space-y-4">
-                                <label className="block text-sm font-bold text-gray-700">
-                                    개강일 확인 <span className="text-red-500">*</span>
-                                </label>
-                                {!watchKlass ? (
-                                    <span className="text-gray-400 text-sm">수강 반을 먼저 선택해주세요.</span>
-                                ) : (
-                                    <div className="p-4 bg-gray-50 rounded border border-gray-200 text-sm text-gray-700 font-bold flex items-center gap-2">
-                                        <Check size={16} className="text-brand-blue" />
-                                        {watchKlass === ENROLLMENT_CONSTANTS.KLASS.B ? ENROLLMENT_CONSTANTS.OPEN_DATE.B :
-                                            watchKlass === ENROLLMENT_CONSTANTS.KLASS.C ? ENROLLMENT_CONSTANTS.OPEN_DATE.C :
-                                                ENROLLMENT_CONSTANTS.OPEN_DATE.A} 개강 예정
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Input Group: Address (Conditional) */}
-                            {watchKlass && watchKlass.endsWith("V") && (
-                                <div className="space-y-4 animate-fadeIn">
-                                    <label className="block text-sm font-bold text-gray-700">
-                                        교재를 받을 정확한 주소 <span className="text-red-500">*</span>
-                                    </label>
-                                    <textarea
-                                        {...register("buyer_addr")}
-                                        placeholder="예시) 서울시 마포구 월드컵북로 2길 11 2층"
-                                        className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all placeholder-gray-300 min-h-[100px] resize-none"
+                        {/* Input Group: Class Selection */}
+                        <div className="space-y-4">
+                            <label className="block text-sm font-bold text-gray-700">
+                                수강방식 선택 <span className="text-red-500">*</span>
+                            </label>
+                            <div className="space-y-3">
+                                {/* Class A (Video 3월) */}
+                                <label className={`flex items-center p-4 border rounded cursor-pointer transition-all ${watchKlass === ENROLLMENT_CONSTANTS.KLASS.B ? "border-brand-blue bg-blue-50/50 ring-1 ring-brand-blue" : "border-gray-200 hover:border-gray-300"}`}>
+                                    <input
+                                        {...register("klass")}
+                                        type="radio"
+                                        value={ENROLLMENT_CONSTANTS.KLASS.B}
+                                        className="w-4 h-4 text-brand-blue border-gray-300 focus:ring-brand-blue"
                                     />
-                                    {errors.buyer_addr && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.buyer_addr.message}</p>}
+                                    <span className="ml-3 text-sm font-medium text-gray-700 font-bold">[A] 영상반 (3월 개강)</span>
+                                </label>
+
+                                {/* Class B (Offline) - Disabled Style but maintained for text consistency */}
+                                <label className="flex items-center p-4 border border-gray-100 rounded bg-gray-50 opacity-60 cursor-not-allowed">
+                                    <input
+                                        type="radio"
+                                        disabled
+                                        className="w-4 h-4 text-gray-300 border-gray-200"
+                                    />
+                                    <span className="ml-3 text-sm text-gray-400">[B] 출석반 <sup className="text-red-400 font-bold">(*2026년 3월 모집예정)</sup></span>
+                                </label>
+                            </div>
+                            {errors.klass && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.klass.message}</p>}
+                        </div>
+
+                        {/* Input Group: Open Date Confirm */}
+                        <div className="space-y-4">
+                            <label className="block text-sm font-bold text-gray-700">
+                                개강일 확인 <span className="text-red-500">*</span>
+                            </label>
+                            {!watchKlass ? (
+                                <span className="text-gray-400 text-sm">수강 반을 먼저 선택해주세요.</span>
+                            ) : (
+                                <div className="p-4 bg-gray-50 rounded border border-gray-200 text-sm text-gray-700 font-bold flex items-center gap-2">
+                                    <Check size={16} className="text-brand-blue" />
+                                    {watchKlass === ENROLLMENT_CONSTANTS.KLASS.B ? ENROLLMENT_CONSTANTS.OPEN_DATE.B :
+                                        watchKlass === ENROLLMENT_CONSTANTS.KLASS.C ? ENROLLMENT_CONSTANTS.OPEN_DATE.C :
+                                            ENROLLMENT_CONSTANTS.OPEN_DATE.A} 개강 예정
                                 </div>
                             )}
-
-                            <hr className="border-gray-100" />
-
-                            {/* Payment Method */}
-                            <div className="space-y-4">
-                                <label className="block text-sm font-bold text-gray-700">
-                                    납부 방법 <span className="text-red-500">*</span>
-                                </label>
-                                <div className="space-y-3">
-                                    <label className="flex items-center p-4 border border-gray-100 rounded bg-gray-50 opacity-60 cursor-not-allowed">
-                                        <input
-                                            type="radio"
-                                            disabled
-                                            className="w-4 h-4 text-gray-300 border-gray-200"
-                                        />
-                                        <span className="ml-3 text-sm text-gray-400">온라인 카드 결제 (준비중)</span>
-                                    </label>
-
-                                    <label className={`flex items-center p-4 border rounded cursor-pointer transition-all ${watchPayment === "bank" ? "border-brand-yellow bg-yellow-50/50 ring-1 ring-brand-yellow" : "border-gray-200"}`}>
-                                        <input
-                                            {...register("pay_method")}
-                                            type="radio"
-                                            value="bank"
-                                            className="w-4 h-4 text-brand-yellow border-gray-300 focus:ring-brand-yellow"
-                                        />
-                                        <span className="ml-3 text-sm font-bold text-gray-700">계좌 이체 (무통장 입금)</span>
-                                    </label>
-                                </div>
-                                {errors.pay_method && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.pay_method.message}</p>}
-                            </div>
-
-                            {/* Agreement */}
-                            <div className="space-y-4 bg-gray-50 p-6 rounded text-sm text-gray-600">
-                                <label className="block font-bold mb-2">
-                                    개인정보이용 및 서비스 이용약관 동의 <span className="text-red-500">*</span>
-                                </label>
-                                <p className="leading-relaxed text-xs text-gray-500 mb-4">
-                                    <Link href="/privacy" className="underline hover:text-brand-blue" target="_blank">개인정보이용</Link> 및 <Link href="/terms" className="underline hover:text-brand-blue" target="_blank">서비스 이용약관</Link>에 동의 합니다.<br />
-                                    개인정보는 수강등록, 서비스제공을 위해 입력된 정보(이름, 전화번호, 이메일, 주소)를 수집합니다. 수집된 정보는 목적이외로는 절대 사용되지 않으며 개인정보 처리 방침에 따라 3년 동안 보관됩니다.
-                                </p>
-
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        {...register("agreement")}
-                                        className="w-5 h-5 text-brand-blue border-gray-300 rounded focus:ring-brand-blue"
-                                    />
-                                    <span className="font-bold text-brand-black">동의 함</span>
-                                </label>
-                                {errors.agreement && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.agreement.message}</p>}
-                            </div>
-
-                            {/* Submit Button */}
-                            <button
-                                type="submit"
-                                disabled={isSubmitting}
-                                className="w-full py-5 bg-brand-blue text-white text-xl font-black rounded-lg shadow-lg hover:bg-black hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                            >
-                                {isSubmitting ? (
-                                    <>
-                                        <Loader2 className="animate-spin" /> 처리중...
-                                    </>
-                                ) : (
-                                    "등록하기"
-                                )}
-                            </button>
-
                         </div>
-                    </form>
-                </div>
+
+                        {/* Input Group: Address (Conditional) */}
+                        {watchKlass && watchKlass.endsWith("V") && (
+                            <div className="space-y-4 animate-fadeIn">
+                                <label className="block text-sm font-bold text-gray-700">
+                                    교재를 받을 정확한 주소 <span className="text-red-500">*</span>
+                                </label>
+                                <textarea
+                                    {...register("buyer_addr")}
+                                    placeholder="예시) 서울시 마포구 월드컵북로 2길 11 2층"
+                                    className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all placeholder-gray-300 min-h-[100px] resize-none"
+                                />
+                                {errors.buyer_addr && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.buyer_addr.message}</p>}
+                            </div>
+                        )}
+
+                        <hr className="border-gray-100" />
+
+                        {/* Payment Method */}
+                        <div className="space-y-4">
+                            <label className="block text-sm font-bold text-gray-700">
+                                납부 방법 <span className="text-red-500">*</span>
+                            </label>
+                            <div className="space-y-3">
+                                <label className="flex items-center p-4 border border-gray-100 rounded bg-gray-50 opacity-60 cursor-not-allowed">
+                                    <input
+                                        type="radio"
+                                        disabled
+                                        className="w-4 h-4 text-gray-300 border-gray-200"
+                                    />
+                                    <span className="ml-3 text-sm text-gray-400">온라인 카드 결제 (준비중)</span>
+                                </label>
+
+                                <label className={`flex items-center p-4 border rounded cursor-pointer transition-all ${watchPayment === "bank" ? "border-brand-yellow bg-yellow-50/50 ring-1 ring-brand-yellow" : "border-gray-200"}`}>
+                                    <input
+                                        {...register("pay_method")}
+                                        type="radio"
+                                        value="bank"
+                                        className="w-4 h-4 text-brand-yellow border-gray-300 focus:ring-brand-yellow"
+                                    />
+                                    <span className="ml-3 text-sm font-bold text-gray-700">계좌 이체 (무통장 입금)</span>
+                                </label>
+                            </div>
+                            {errors.pay_method && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.pay_method.message}</p>}
+                        </div>
+
+                        {/* Agreement */}
+                        <div className="space-y-4 bg-gray-50 p-6 rounded text-sm text-gray-600">
+                            <label className="block font-bold mb-2">
+                                개인정보이용 및 서비스 이용약관 동의 <span className="text-red-500">*</span>
+                            </label>
+                            <p className="leading-relaxed text-xs text-gray-500 mb-4">
+                                <Link href="/privacy" className="underline hover:text-brand-blue" target="_blank">개인정보이용</Link> 및 <Link href="/terms" className="underline hover:text-brand-blue" target="_blank">서비스 이용약관</Link>에 동의 합니다.<br />
+                                개인정보는 수강등록, 서비스제공을 위해 입력된 정보(이름, 전화번호, 이메일, 주소)를 수집합니다. 수집된 정보는 목적이외로는 절대 사용되지 않으며 개인정보 처리 방침에 따라 3년 동안 보관됩니다.
+                            </p>
+
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    {...register("agreement")}
+                                    className="w-5 h-5 text-brand-blue border-gray-300 rounded focus:ring-brand-blue"
+                                />
+                                <span className="font-bold text-brand-black">동의 함</span>
+                            </label>
+                            {errors.agreement && <p className="text-red-500 text-xs font-bold flex items-center gap-1"><AlertCircle size={12} /> {errors.agreement.message}</p>}
+                        </div>
+
+                        {/* Submit Button */}
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="w-full py-5 bg-brand-blue text-white text-xl font-black rounded-lg shadow-lg hover:bg-black hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        >
+                            {isSubmitting ? (
+                                <>
+                                    <Loader2 className="animate-spin" /> 처리중...
+                                </>
+                            ) : (
+                                "등록하기"
+                            )}
+                        </button>
+
+                    </div>
+                </form>
             </div>
+        </div>
+    );
+}
+
+export default function PaymentPage() {
+    return (
+        <ApolloWrapper>
+            <PaymentFormContent />
         </ApolloWrapper>
     );
 }
+

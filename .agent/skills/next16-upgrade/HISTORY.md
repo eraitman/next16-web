@@ -28,15 +28,28 @@
 - [x] Implemented Global Layout (Header, Footer, Brand Theme) in `next16-web`.
 - [x] Migrated Home Page (Section 1-4) with responsive assets and animations.
 
-## 4. Current Status
-- **Phase**: **Frontend (Phase 1) Implementation - Page by Page**.
-- [x] Migrated **Course** (과정안내) page.
-- [x] Migrated **Review** (수강효과) page with dynamic GraphQL data.
-- [x] Migrated **Requirement** (수강요건) page.
+## 4. Current Status (Updated 2026-02-05)
+- **Phase**: **Frontend & Backend Parallel Migration**
 
-## 4. Current Status
-- **Phase**: **Frontend (Phase 1) Implementation - Page by Page**.
-- [x] Migrated **Board Write/View** functionality completely.
-- [x] Migrated **Enrollment** (수강신청) page.
-- [ ] Migrated **Payment** page (Refactored to Hook Form v7 + Zod, PortOne Removed).
-- **Next Task**: **Payment** completion page.
+### Frontend (`next16-web`)
+- [x] **Layout**: Global Header, Footer, Brand Theme implemented.
+- [x] **Home**: Sections 1-4 migrated (Refining Section 2).
+- [x] **Introduction (소개)**: Content fully migrated (Legacy text preserved 1:1).
+- [x] **Course (과정안내)**: Migrated.
+- [x] **Review (수강효과)**: Migrated with dynamic GraphQL data.
+- [x] **Requirement (수강요건)**: Migrated.
+- [x] **Board**: Write/View functionality migrated.
+- [x] **Enrollment (수강신청)**: Migrated (Fixed default tab logic).
+- [x] **Deployment**: Vercel configuration finalized (`package.json`, `next.config.ts`).
+- [ ] **Payment**: Logic refactoring (Hook Form v7 + Zod) in progress.
+
+### Backend (`homepage-server`)
+- [x] **Infrastructure**: Upgraded to Node.js 22, ESM, TypeScript.
+- [x] **Database**: Prisma 7 setup & Schema migrated from `ce-server`.
+- [x] **Services**: `PaymentService` skeleton, Batch System (Ping Check refined).
+- [ ] **API**: Full GraphOS Routing migration pending.
+
+## 5. Next Steps
+- Complete **Payment** page integration (Frontend).
+- Finalize `PaymentService` logic (Backend).
+- Verify Vercel deployment build.
