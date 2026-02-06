@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
             reqUrl: P_REQ_URL as string,
             oid: P_OID as string,
             mid: P_MID as string,
-            type: 'MOBILE'
+            type: 'CARD'
         });
 
         return NextResponse.redirect(`${baseUrl}/payment/complete?${params.toString()}`, 303);

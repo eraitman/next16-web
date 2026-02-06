@@ -49,12 +49,12 @@ function PaymentCompleteContent() {
     const buyerName = searchParams.get("name") || "수강생";
     const amount = searchParams.get("amount") || "420000";
     const oid = searchParams.get("oid") || "";
-    const type = searchParams.get("type"); // PC or MOBILE
+    const paymentType = searchParams.get("type"); // CARD or BANK
     const formattedAmount = Number(amount).toLocaleString();
 
     useEffect(() => {
         const triggerValidation = async () => {
-            if (!type || !oid) return;
+            if (paymentType !== 'CARD' || !oid) return;
 
             setIsValidating(true);
             try {
@@ -62,7 +62,7 @@ function PaymentCompleteContent() {
                     variables: {
                         oid,
                         mid: searchParams.get("mid"),
-                        type,
+                        type: paymentType,
                         authToken: searchParams.get("authToken"),
                         authUrl: searchParams.get("authUrl"),
                         tid: searchParams.get("tid"),
@@ -86,7 +86,7 @@ function PaymentCompleteContent() {
         };
 
         triggerValidation();
-    }, [type, oid, searchParams, validateInicis]);
+    }, [paymentType, oid, searchParams, validateInicis]);
 
     return (
         <div className="bg-gray-50 min-h-screen py-10 md:py-20 flex items-center justify-center">
@@ -107,10 +107,10 @@ function PaymentCompleteContent() {
                             )}
                         </div>
                         <h1 className="text-2xl font-black tracking-tight mb-1">
-                            {isValidating ? "결제 승인 중..." : isFailed ? "결제 실패" : type ? "결제가 완료되었습니다!" : "신청이 접수되었습니다!"}
+                            {isValidating ? "결제 승인 중..." : isFailed ? "결제 실패" : paymentType === 'CARD' ? "결제가 완료되었습니다!" : "신청이 접수되었습니다!"}
                         </h1>
                         <p className="text-blue-100 text-sm">
-                            {isValidating ? "잠시만 기다려주세요." : isFailed ? "문제가 발생했습니다." : (type ? "감사합니다." : "아직 등록이 완료된 것은 아닙니다.")}
+                            {isValidating ? "잠시만 기다려주세요." : isFailed ? "문제가 발생했습니다." : (paymentType === 'CARD' ? "감사합니다." : "아직 등록이 완료된 것은 아닙니다.")}
                         </p>
                     </div>
 
@@ -123,13 +123,13 @@ function PaymentCompleteContent() {
                                     <>안녕하세요, <span className="font-bold text-black text-lg">{buyerName}</span>님.</>
                                 )}
                             </p>
-                            {!type && !isFailed && (
+                            {paymentType === 'BANK' && !isFailed && (
                                 <p className="text-sm text-gray-500 leading-relaxed">
                                     아래 계좌로 수강료를 입금해주시면<br />
                                     확인 후 최종 등록이 확정됩니다.
                                 </p>
                             )}
-                            {type && !isFailed && !isValidating && (
+                            {paymentType === 'CARD' && !isFailed && !isValidating && (
                                 <p className="text-sm text-gray-500 leading-relaxed">
                                     수강 등록이 정상적으로 완료되었습니다.<br />
                                     곧 안내 문자를 보내드리겠습니다.
@@ -137,7 +137,7 @@ function PaymentCompleteContent() {
                             )}
                         </div>
 
-                        {!type && (
+                        {paymentType === 'BANK' && (
                             <div className="bg-yellow-50 border border-brand-yellow rounded-xl p-6 text-center space-y-4">
                                 <div>
                                     <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">Bank Account</span>
@@ -168,7 +168,7 @@ function PaymentCompleteContent() {
                             </div>
                         )}
 
-                        {type && !isFailed && (
+                        {paymentType === 'CARD' && !isFailed && (
                             <div className="bg-brand-blue/5 border border-brand-blue/20 rounded-xl p-6 text-center space-y-4">
                                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">결제 내역</span>
                                 <div className="text-xl font-bold text-gray-800">
@@ -182,7 +182,7 @@ function PaymentCompleteContent() {
                             </div>
                         )}
 
-                        {!type && !isFailed && (
+                        {paymentType === 'BANK' && !isFailed && (
                             <div className="space-y-3 text-sm text-gray-500 bg-gray-50 p-4 rounded-lg">
                                 <p className="flex gap-2">
                                     <span className="text-brand-blue font-bold">✓</span>

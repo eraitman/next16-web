@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ApolloWrapper } from "@/lib/apollo/ApolloWrapper";
 import { ENROLLMENT_CONSTANTS } from "@/lib/constants/enrollment";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { gql } from "@apollo/client";
 import { useMutation, useLazyQuery } from "@apollo/client/react";
 import { Check, Loader2, AlertCircle } from "lucide-react";
@@ -106,7 +106,20 @@ const CREATE_ORDER = gql`
 
 function PaymentFormContent() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [paymentError, setPaymentError] = useState<string | null>(null);
+
+    // Check for error in URL query params
+    useEffect(() => {
+        const error = searchParams.get('error');
+        if (error) {
+            setPaymentError(decodeURIComponent(error));
+            // Clean up URL without error parameter
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, '', newUrl);
+        }
+    }, [searchParams]);
 
     // Enrollment mutation with Inicis config
     const [enrollMutation] = useMutation(CREATE_ORDER);
@@ -186,7 +199,8 @@ function PaymentFormContent() {
                     name: data.buyer_name,
                     klass: data.klass,
                     amount: "420000",
-                    oid: oid
+                    oid: oid,
+                    type: 'BANK'
                 });
                 router.push(`/payment/complete?${params.toString()}`);
                 return;
@@ -346,6 +360,24 @@ function PaymentFormContent() {
                             </div>
                         </div>
                     </div>
+
+                    {/* Payment Error Alert */}
+                    {paymentError && (
+                        <div className="mx-8 mt-8 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+                            <AlertCircle className="text-red-600 flex-shrink-0 mt-0.5" size={20} />
+                            <div className="flex-1">
+                                <h3 className="font-bold text-red-900 mb-1">결제 오류</h3>
+                                <p className="text-sm text-red-800">{paymentError}</p>
+                            </div>
+                            <button
+                                onClick={() => setPaymentError(null)}
+                                className="text-red-600 hover:text-red-800 font-bold"
+                                aria-label="닫기"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                    )}
 
                     <div className="p-8 md:p-12 space-y-10">
 

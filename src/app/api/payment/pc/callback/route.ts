@@ -115,7 +115,8 @@ export async function POST(req: NextRequest) {
             name: validationResult.buyer_name || '',
             klass: validationResult.option1 || '',
             amount: '420000',
-            oid: oid as string
+            oid: oid as string,
+            type: 'CARD'
         });
 
         return NextResponse.redirect(
