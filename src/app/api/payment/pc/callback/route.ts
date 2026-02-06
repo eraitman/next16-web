@@ -45,23 +45,32 @@ export async function POST(req: NextRequest) {
         }
 
         // Success - redirect to complete page
-        // We pass all parameters to the complete page, which will trigger the final validation mutation.
-        // This is more consistent and prevents double-validation.
+        // We use the OID from merchantData (which we sent) rather than orderNumber (which Inicis returns)
+        // to ensure perfect matching with our DB record.
+        let actualOid = oid as string;
+        let name = '';
+        let klass = '';
+
+        if (merchantData) {
+            const dataParts = (merchantData as string).split('|');
+            if (dataParts.length > 0) {
+                actualOid = dataParts[0]; // Use the first part as the real OID
+                name = dataParts[1] ? decodeURIComponent(dataParts[1]) : '';
+                klass = dataParts[4] || '';
+            }
+        }
+
         const params = new URLSearchParams({
-            amount: '420000', // Constant for now as per current logic
-            oid: oid as string,
+            amount: '420000',
+            oid: actualOid,
             mid: mid as string,
             authToken: authToken as string,
             authUrl: authUrl as string,
             type: 'PC'
         });
 
-        // Add buyer name/klass from merchantData if available to show on complete page immediately
-        if (merchantData) {
-            const [memoOid, name, tel, email, klass] = (merchantData as string).split('|');
-            if (name) params.append('name', name);
-            if (klass) params.append('klass', klass);
-        }
+        if (name) params.append('name', name);
+        if (klass) params.append('klass', klass);
 
         return NextResponse.redirect(
             `${baseUrl}/payment/complete?${params.toString()}`,

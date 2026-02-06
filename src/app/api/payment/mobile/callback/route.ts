@@ -24,19 +24,29 @@ export async function POST(req: NextRequest) {
             return NextResponse.redirect(`${baseUrl}/payment?error=${encodeURIComponent(P_RMESG1 as string)}`, 303);
         }
 
+        let actualOid = P_OID as string;
+        let name = '';
+        let klass = '';
+
+        if (P_NOTI) {
+            const dataParts = (P_NOTI as string).split('|');
+            if (dataParts.length > 0) {
+                actualOid = dataParts[0]; // Real OID from our system
+                name = dataParts[1] ? decodeURIComponent(dataParts[1]) : '';
+                klass = dataParts[4] || '';
+            }
+        }
+
         const params = new URLSearchParams({
             tid: P_TID as string,
             reqUrl: P_REQ_URL as string,
-            oid: P_OID as string,
+            oid: actualOid,
             mid: P_MID as string,
             type: 'MOBILE'
         });
 
-        if (P_NOTI) {
-            const [memoOid, name, tel, email, klass] = (P_NOTI as string).split('|');
-            if (name) params.append('name', name);
-            if (klass) params.append('klass', klass);
-        }
+        if (name) params.append('name', name);
+        if (klass) params.append('klass', klass);
 
         return NextResponse.redirect(`${baseUrl}/payment/complete?${params.toString()}`, 303);
     } catch (error) {
