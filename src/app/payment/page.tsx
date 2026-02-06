@@ -537,7 +537,7 @@ function PaymentFormContent() {
                     </form>
 
                     {/* Mobile Form */}
-                    <form id="mobile_payment_form" method="POST" action="https://stgmobile.inicis.com/smart/payment/">
+                    <form id="mobile_payment_form" method="POST" action="https://mobile.inicis.com/smart/payment/">
                         <input type="hidden" name="P_MID" value={pgData?.mid || ""} />
                         <input type="hidden" name="P_OID" value={pgData?.oid || ""} />
                         <input type="hidden" name="P_AMT" value="420000" />
