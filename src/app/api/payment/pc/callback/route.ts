@@ -44,80 +44,24 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // Call Backend GraphQL Mutation to validate and approve payment
-        const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_SERVER_URL || 'https://server.cliffenglish.co.kr/graphql';
-
-        const graphqlQuery = {
-            query: `
-                mutation validateInicis(
-                    $oid: String!
-                    $type: String!
-                    $authToken: String!
-                    $authUrl: String!
-                    $mid: String!
-                ) {
-                    validateInicis(
-                        oid: $oid
-                        type: $type
-                        authToken: $authToken
-                        authUrl: $authUrl
-                        mid: $mid
-                    ) {
-                        result
-                        message
-                        buyer_name
-                        buyer_email
-                        buyer_tel
-                        option1
-                    }
-                }
-            `,
-            variables: {
-                oid: oid,
-                type: 'PC',
-                authToken: authToken,
-                authUrl: authUrl,
-                mid: mid
-            }
-        };
-
-        const response = await fetch(GRAPHQL_ENDPOINT, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(graphqlQuery)
-        });
-
-        const result = await response.json();
-
-        console.log('Backend validation result:', result);
-
-        if (result.errors) {
-            console.error('GraphQL errors:', result.errors);
-            return NextResponse.redirect(
-                `${baseUrl}/payment?error=${encodeURIComponent('결제 검증 중 오류가 발생했습니다.')}`,
-                303
-            );
-        }
-
-        const validationResult = result.data?.validateInicis;
-
-        if (!validationResult?.result) {
-            return NextResponse.redirect(
-                `${baseUrl}/payment?error=${encodeURIComponent(validationResult?.message || '결제 승인 실패')}`,
-                303
-            );
-        }
-
         // Success - redirect to complete page
+        // We pass all parameters to the complete page, which will trigger the final validation mutation.
+        // This is more consistent and prevents double-validation.
         const params = new URLSearchParams({
-            name: validationResult.buyer_name || '',
-            klass: validationResult.option1 || '',
-            amount: '420000',
+            amount: '420000', // Constant for now as per current logic
             oid: oid as string,
-            type: 'CARD'
+            mid: mid as string,
+            authToken: authToken as string,
+            authUrl: authUrl as string,
+            type: 'PC'
         });
+
+        // Add buyer name/klass from merchantData if available to show on complete page immediately
+        if (merchantData) {
+            const [memoOid, name, tel, email, klass] = (merchantData as string).split('|');
+            if (name) params.append('name', name);
+            if (klass) params.append('klass', klass);
+        }
 
         return NextResponse.redirect(
             `${baseUrl}/payment/complete?${params.toString()}`,

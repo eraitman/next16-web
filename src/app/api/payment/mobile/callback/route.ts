@@ -29,8 +29,14 @@ export async function POST(req: NextRequest) {
             reqUrl: P_REQ_URL as string,
             oid: P_OID as string,
             mid: P_MID as string,
-            type: 'CARD'
+            type: 'MOBILE'
         });
+
+        if (P_NOTI) {
+            const [memoOid, name, tel, email, klass] = (P_NOTI as string).split('|');
+            if (name) params.append('name', name);
+            if (klass) params.append('klass', klass);
+        }
 
         return NextResponse.redirect(`${baseUrl}/payment/complete?${params.toString()}`, 303);
     } catch (error) {
