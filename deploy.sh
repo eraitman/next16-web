@@ -36,8 +36,9 @@ mkdir -p "$NEXT_TARGET"
 # 4. Copy standalone output and assets
 # Next.js standalone output is in .next/standalone
 if [ -d ".next/standalone" ]; then
-    echo "📂 Copying standalone files to $NEXT_TARGET..."
-    cp -r .next/standalone/* "$NEXT_TARGET/"
+    echo "📂 Copying standalone files (including .next) to $NEXT_TARGET..."
+    # Use /. to copy all contents including hidden files
+    cp -r .next/standalone/. "$NEXT_TARGET/"
     
     echo "📂 Copying static and public assets..."
     mkdir -p "$NEXT_TARGET/.next"
