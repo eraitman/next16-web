@@ -195,6 +195,18 @@ function PaymentFormContent() {
             // 3. If Card (PG), Fetch Signatures and Trigger PG
             if (data.pay_method === "card") {
                 const config = mutationResult.enroll.inicisConfig;
+
+                // Debug: Log all inicis config values
+                console.log("=== Inicis Config from Server ===");
+                console.log("mid:", config?.mid);
+                console.log("timestamp:", config?.timestamp);
+                console.log("signature:", config?.signature);
+                console.log("verification:", config?.verification);
+                console.log("mKey:", config?.mKey);
+                console.log("P_CHKFAKE:", config?.P_CHKFAKE);
+                console.log("P_TIMESTAMP:", config?.P_TIMESTAMP);
+                console.log("=================================");
+
                 if (!config) {
                     alert("결제 설정 로딩 중 오류가 발생했습니다.");
                     setIsSubmitting(false);
@@ -203,6 +215,7 @@ function PaymentFormContent() {
 
                 if (isMobile) {
                     setPgData({
+                        mid: config.mid,
                         P_TIMESTAMP: config.P_TIMESTAMP,
                         P_CHKFAKE: config.P_CHKFAKE,
                         oid: mutationResult.enroll.oid,
@@ -223,6 +236,7 @@ function PaymentFormContent() {
                     }, 100);
                 } else {
                     setPgData({
+                        mid: config.mid,
                         timestamp: config.timestamp,
                         signature: config.signature,
                         verification: config.verification,
@@ -239,6 +253,18 @@ function PaymentFormContent() {
                         if (form) {
                             const midInput = form.querySelector('input[name="mid"]') as HTMLInputElement;
                             if (midInput) midInput.value = config.mid;
+
+                            // Debug: Log form values before submission
+                            console.log("=== PC Form Values ===");
+                            console.log("mid:", (form.querySelector('input[name="mid"]') as HTMLInputElement)?.value);
+                            console.log("oid:", (form.querySelector('input[name="oid"]') as HTMLInputElement)?.value);
+                            console.log("price:", (form.querySelector('input[name="price"]') as HTMLInputElement)?.value);
+                            console.log("timestamp:", (form.querySelector('input[name="timestamp"]') as HTMLInputElement)?.value);
+                            console.log("signature:", (form.querySelector('input[name="signature"]') as HTMLInputElement)?.value);
+                            console.log("verification:", (form.querySelector('input[name="verification"]') as HTMLInputElement)?.value);
+                            console.log("mKey:", (form.querySelector('input[name="mKey"]') as HTMLInputElement)?.value);
+                            console.log("======================");
+
                             // @ts-ignore
                             if (window.INIStdPay) {
                                 // @ts-ignore
@@ -491,7 +517,7 @@ function PaymentFormContent() {
                     <form id="pc_payment_form" method="POST">
                         <input type="hidden" name="version" value="1.0" />
                         <input type="hidden" name="gopaymethod" value="card" />
-                        <input type="hidden" name="mid" value={process.env.NEXT_PUBLIC_INI_MID || "INIpayTest"} />
+                        <input type="hidden" name="mid" value={pgData?.mid || ""} />
                         <input type="hidden" name="oid" value={pgData?.oid || ""} />
                         <input type="hidden" name="price" value="420000" />
                         <input type="hidden" name="timestamp" value={pgData?.timestamp || ""} />
@@ -512,7 +538,7 @@ function PaymentFormContent() {
 
                     {/* Mobile Form */}
                     <form id="mobile_payment_form" method="POST" action="https://stgmobile.inicis.com/smart/payment/">
-                        <input type="hidden" name="P_MID" value={process.env.NEXT_PUBLIC_INI_MID || "INIpayTest"} />
+                        <input type="hidden" name="P_MID" value={pgData?.mid || ""} />
                         <input type="hidden" name="P_OID" value={pgData?.oid || ""} />
                         <input type="hidden" name="P_AMT" value="420000" />
                         <input type="hidden" name="P_GOODS" value={pgData?.productName || "수강등록"} />
