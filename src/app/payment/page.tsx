@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -650,7 +650,9 @@ export default function PaymentPage() {
     return (
         <ApolloWrapper>
             <InicisScript />
-            <PaymentFormContent />
+            <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><Loader2 className="animate-spin text-brand-blue" size={32} /></div>}>
+                <PaymentFormContent />
+            </Suspense>
         </ApolloWrapper>
     );
 }
