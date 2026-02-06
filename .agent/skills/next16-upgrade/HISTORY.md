@@ -28,28 +28,20 @@
 - [x] Implemented Global Layout (Header, Footer, Brand Theme) in `next16-web`.
 - [x] Migrated Home Page (Section 1-4) with responsive assets and animations.
 
-## 4. Current Status (Updated 2026-02-05)
-- **Phase**: **Frontend & Backend Parallel Migration**
+## 4. Current Status (Updated 2026-02-06)
+- **Phase**: **Payment Migration Complete & A/B Test Ready**
 
 ### Frontend (`next16-web`)
 - [x] **Layout**: Global Header, Footer, Brand Theme implemented.
-- [x] **Home**: Sections 1-4 migrated (Refining Section 2).
-- [x] **Introduction (소개)**: Content fully migrated (Legacy text preserved 1:1).
-- [x] **Course (과정안내)**: Migrated.
-- [x] **Review (수강효과)**: Migrated with dynamic GraphQL data.
-- [x] **Requirement (수강요건)**: Migrated.
-- [x] **Board**: Write/View functionality migrated.
-- [x] **Enrollment (수강신청)**: Migrated (Fixed default tab logic).
-- [x] **Deployment**: Vercel configuration finalized (`package.json`, `next.config.ts`).
-- [ ] **Payment**: Logic refactoring (Hook Form v7 + Zod) in progress.
+- [x] **Introduction/Course/Review/Requirement**: Content migrated and verified.
+- [x] **Payment**: KG Inicis (PC/Mobile) fully integrated. Fixed OID matching issues via `merchantData`.
+- [x] **A/B Testing**: URL-persistent group toggle implemented (`useABTest` hook).
 
 ### Backend (`homepage-server`)
-- [x] **Infrastructure**: Upgraded to Node.js 22, ESM, TypeScript.
-- [x] **Database**: Prisma 7 setup & Schema migrated from `ce-server`.
-- [x] **Services**: `PaymentService` skeleton, Batch System (Ping Check refined).
-- [ ] **API**: Full GraphOS Routing migration pending.
+- [x] **Inicis Service**: Auto-detection (PC/Mobile), derivated MID extraction, and EUC-KR response parsing implemented.
+- [x] **Database**: `Payment` schema refined, `imp_uid` marked as NOT USE.
 
 ## 5. Next Steps
-- Complete **Payment** page integration (Frontend).
-- Finalize `PaymentService` logic (Backend).
-- Verify Vercel deployment build.
+- Implement A/B test variants for Home Page (Section 2).
+- Optimize mobile-first UI refinements.
+- Final production deployment on Vercel.

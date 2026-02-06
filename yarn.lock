@@ -271,6 +271,15 @@
     "@eslint/core" "^0.17.0"
     levn "^0.4.1"
 
+"@flags-sdk/growthbook@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@flags-sdk/growthbook/-/growthbook-0.2.0.tgz#e29c7f4ea613a2f76157512f85501b3f67de212e"
+  integrity sha512-E8GEsUXyVOezz0QU7CYltXGorfA8MVZd+JfCF+Cg2IDA2Us2IIzt1t+eS0CJkwIHkoWiqlbVav7ARxdWAvJslw==
+  dependencies:
+    "@growthbook/growthbook" "^1.5.1"
+    "@vercel/edge-config" "^1.4.3"
+    "@vercel/functions" "^1.5.2"
+
 "@floating-ui/core@^1.7.4":
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.7.4.tgz#4a006a6e01565c0f87ba222c317b056a2cffd2f4"
@@ -335,6 +344,13 @@
   version "3.2.0"
   resolved "https://registry.npmjs.org/@graphql-typed-document-node/core/-/core-3.2.0.tgz"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
+
+"@growthbook/growthbook@^1.5.1":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@growthbook/growthbook/-/growthbook-1.6.4.tgz#8bc8398343aa448d08dc4d24e171b157f3219f33"
+  integrity sha512-EID0PBixS9PyWLVEDT0FLGWSQ4kSaGo1kFOTFgIYxwI7/SRqesbYOt2Bc+79vb6HcQANzRhdmtz/9rZ3JsOVYA==
+  dependencies:
+    dom-mutator "^0.6.0"
 
 "@headlessui/react@^2.2.9":
   version "2.2.9"
@@ -1093,6 +1109,23 @@
   resolved "https://registry.yarnpkg.com/@unrs/resolver-binding-win32-x64-msvc/-/resolver-binding-win32-x64-msvc-1.11.1.tgz#538b1e103bf8d9864e7b85cc96fa8d6fb6c40777"
   integrity sha512-lrW200hZdbfRtztbygyaq/6jP6AKE8qQN2KvPcJ+x7wiD038YtnYtZ82IMNJ69GJibV7bwL3y9FgK+5w/pYt6g==
 
+"@vercel/edge-config-fs@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@vercel/edge-config-fs/-/edge-config-fs-0.1.0.tgz#cda8327f611418c1d1cbb28c6bed02d782be928b"
+  integrity sha512-NRIBwfcS0bUoUbRWlNGetqjvLSwgYH/BqKqDN7vK1g32p7dN96k0712COgaz6VFizAm9b0g6IG6hR6+hc0KCPg==
+
+"@vercel/edge-config@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@vercel/edge-config/-/edge-config-1.4.3.tgz#f8713bc65df91f314108b073d4ff4975b4106e97"
+  integrity sha512-8vTDATodRrH49wMzKEjZ8/5H2qs1aPkD0uRK585f/Fx4YN2wfHfY/3td9OFrh+gdnCq07z8A5f0hoY6xhBcPkg==
+  dependencies:
+    "@vercel/edge-config-fs" "0.1.0"
+
+"@vercel/functions@^1.5.2":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@vercel/functions/-/functions-1.6.0.tgz#97c29d5aff62894dc5a5ba5525bcee8bbbf28b82"
+  integrity sha512-R6FKQrYT5MZs5IE1SqeCJWxMuBdHawFcCZboKKw8p7s+6/mcd55Gx6tWmyKnQTyrSEA04NH73Tc9CbqpEle8RA==
+
 "@wry/caches@^1.0.0":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@wry/caches/-/caches-1.0.1.tgz"
@@ -1501,6 +1534,11 @@ doctrine@^2.1.0:
   integrity sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==
   dependencies:
     esutils "^2.0.2"
+
+dom-mutator@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/dom-mutator/-/dom-mutator-0.6.0.tgz#079d7a4b3e8981a562cd777548b99baab51d65c5"
+  integrity sha512-iCt9o0aYfXMUkz/43ZOAUFQYotjGB+GNbYJiJdz4TgXkyToXbbRy5S6FbTp72lRBtfpUMwEc1KmpFEU4CZeoNg==
 
 dunder-proto@^1.0.0, dunder-proto@^1.0.1:
   version "1.0.1"
@@ -3537,12 +3575,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.npmjs.org/zod-validation-error/-/zod-validation-error-4.0.2.tgz"
   integrity sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ==
 
-"zod@^3.25.0 || ^4.0.0":
-  version "4.3.6"
-  resolved "https://registry.npmjs.org/zod/-/zod-4.3.6.tgz"
-  integrity sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==
-
-zod@^4.3.6:
+"zod@^3.25.0 || ^4.0.0", zod@^4.3.6:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/zod/-/zod-4.3.6.tgz#89c56e0aa7d2b05107d894412227087885ab112a"
   integrity sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==
