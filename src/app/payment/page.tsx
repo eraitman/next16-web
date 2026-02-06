@@ -254,6 +254,25 @@ function PaymentFormContent() {
                             const midInput = form.querySelector('input[name="mid"]') as HTMLInputElement;
                             if (midInput) midInput.value = config.mid;
 
+                            // Set callback URLs dynamically at runtime
+                            const returnUrlInput = form.querySelector('input[name="returnUrl"]') as HTMLInputElement;
+                            const closeUrlInput = form.querySelector('input[name="closeUrl"]') as HTMLInputElement;
+
+                            // Debug: Check what origin we're getting
+                            console.log("NEXT_PUBLIC_CLIENT_URL:", process.env.NEXT_PUBLIC_CLIENT_URL);
+                            console.log("window.location.origin:", window.location.origin);
+                            console.log("window.location.href:", window.location.href);
+
+                            // Priority: 1. Environment variable, 2. Hardcoded production, 3. window.location
+                            const baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL
+                                || 'https://web.cliffenglish.co.kr'
+                                || window.location.origin;
+
+                            console.log("Using baseUrl:", baseUrl);
+
+                            if (returnUrlInput) returnUrlInput.value = `${baseUrl}/api/payment/pc/callback`;
+                            if (closeUrlInput) closeUrlInput.value = `${baseUrl}/api/payment/pc/close`;
+
                             // Debug: Log form values before submission
                             console.log("=== PC Form Values ===");
                             console.log("mid:", (form.querySelector('input[name="mid"]') as HTMLInputElement)?.value);
@@ -263,6 +282,8 @@ function PaymentFormContent() {
                             console.log("signature:", (form.querySelector('input[name="signature"]') as HTMLInputElement)?.value);
                             console.log("verification:", (form.querySelector('input[name="verification"]') as HTMLInputElement)?.value);
                             console.log("mKey:", (form.querySelector('input[name="mKey"]') as HTMLInputElement)?.value);
+                            console.log("returnUrl:", returnUrlInput?.value);
+                            console.log("closeUrl:", closeUrlInput?.value);
                             console.log("======================");
 
                             // @ts-ignore
@@ -292,6 +313,38 @@ function PaymentFormContent() {
                     <div className="bg-brand-black p-8 text-center">
                         <h1 className="text-3xl font-black text-white tracking-tight">수강등록 신청서</h1>
                         <p className="text-gray-400 text-sm mt-2">정확한 정보 입력을 부탁드립니다</p>
+                    </div>
+
+                    {/* Debug Panel - Remove in production */}
+                    <div className="p-8 bg-yellow-50 border-b border-yellow-200">
+                        <h2 className="text-lg font-bold text-yellow-900 mb-4">🔧 환경변수 테스트 (개발용)</h2>
+                        <div className="space-y-2 text-sm font-mono">
+                            <div className="flex gap-2">
+                                <span className="font-bold text-yellow-800">NEXT_PUBLIC_CLIENT_URL:</span>
+                                <span className="text-yellow-900">{process.env.NEXT_PUBLIC_CLIENT_URL || '(undefined)'}</span>
+                            </div>
+                            <div className="flex gap-2">
+                                <span className="font-bold text-yellow-800">window.location.origin:</span>
+                                <span className="text-yellow-900">{typeof window !== 'undefined' ? window.location.origin : '(server-side)'}</span>
+                            </div>
+                            <div className="flex gap-2">
+                                <span className="font-bold text-yellow-800">window.location.href:</span>
+                                <span className="text-yellow-900">{typeof window !== 'undefined' ? window.location.href : '(server-side)'}</span>
+                            </div>
+                            <div className="flex gap-2">
+                                <span className="font-bold text-yellow-800">사용될 baseUrl:</span>
+                                <span className="text-green-700 font-bold">
+                                    {process.env.NEXT_PUBLIC_CLIENT_URL || 'https://web.cliffenglish.co.kr'}
+                                </span>
+                            </div>
+                            <div className="mt-4 p-3 bg-yellow-100 rounded">
+                                <p className="text-xs text-yellow-800">
+                                    ✓ 환경변수가 설정되어 있으면 그 값 사용<br />
+                                    ✓ 없으면 하드코딩된 프로덕션 URL 사용: https://web.cliffenglish.co.kr<br />
+                                    ✓ 결제 후 콜백 URL: {process.env.NEXT_PUBLIC_CLIENT_URL || 'https://web.cliffenglish.co.kr'}/api/payment/pc/callback
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="p-8 md:p-12 space-y-10">
