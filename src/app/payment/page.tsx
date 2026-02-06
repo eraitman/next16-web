@@ -228,26 +228,39 @@ function PaymentFormContent() {
                 }
 
                 if (isMobile) {
-                    setPgData({
-                        mid: config.mid,
-                        P_TIMESTAMP: config.P_TIMESTAMP,
-                        P_CHKFAKE: config.P_CHKFAKE,
-                        oid: mutationResult.enroll.oid,
-                        productName: productName,
-                        buyername: data.buyer_name,
-                        buyertel: data.buyer_tel,
-                        buyeremail: data.buyer_email,
-                    });
+                    const newPaymentForm: any = {
+                        P_INI_PAYMENT: "card",
+                        P_MID: config.mid,
+                        P_OID: mutationResult.enroll.oid,
+                        P_AMT: "420000",
+                        P_GOODS: productName,
+                        P_UNAME: data.buyer_name,
+                        P_MOBILE: data.buyer_tel,
+                        P_EMAIL: data.buyer_email,
+                        P_RESERVED: "centerCd=Y",
+                        P_LANG: "ko",
+                        P_CHARSET: "utf8",
+                        P_NOTI: `${mutationResult.enroll.oid}|${data.buyer_name}|${data.buyer_tel}|${data.buyer_email}|${data.klass}|true`,
+                        P_NEXT_URL: `${process.env.NEXT_PUBLIC_CLIENT_URL || window.location.origin}/api/payment/mobile/callback`,
+                    };
 
-                    setTimeout(() => {
-                        const form = document.getElementById("mobile_payment_form") as HTMLFormElement;
-                        if (form) {
-                            // Extra MID assignment for security
-                            const midInput = form.querySelector('input[name="P_MID"]') as HTMLInputElement;
-                            if (midInput) midInput.value = config.mid;
-                            form.submit();
-                        }
-                    }, 100);
+                    const form = document.createElement("form");
+                    form.method = "POST";
+                    form.action = "https://mobile.inicis.com/smart/payment/";
+                    form.target = "_self";
+                    form.acceptCharset = "euc-kr";
+                    form.style.display = "none";
+
+                    for (const key in newPaymentForm) {
+                        const input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = key;
+                        input.value = newPaymentForm[key];
+                        form.appendChild(input);
+                    }
+
+                    document.body.appendChild(form);
+                    form.submit();
                 } else {
                     setPgData({
                         mid: config.mid,
@@ -619,26 +632,6 @@ function PaymentFormContent() {
                         <input type="hidden" name="closeUrl" value={typeof window !== 'undefined' ? `${process.env.NEXT_PUBLIC_CLIENT_URL || window.location.origin}/api/payment/pc/close` : ""} />
                         <input type="hidden" name="acceptmethod" value="HPP(1):centerCd(Y)" />
                         <input type="hidden" name="merchantData" value={pgData ? `${pgData.oid}|${encodeURIComponent(pgData.buyername)}|${pgData.buyertel}|${pgData.buyeremail}|${watchKlass}|true` : ""} />
-                    </form>
-
-                    {/* Mobile Form */}
-                    <form id="mobile_payment_form" method="POST" action="https://mobile.inicis.com/smart/payment/">
-                        <input type="hidden" name="P_INI_PAYMENT" value="card" />
-                        <input type="hidden" name="P_MID" value={pgData?.mid || ""} />
-                        <input type="hidden" name="P_OID" value={pgData?.oid || ""} />
-                        <input type="hidden" name="P_AMT" value="420000" />
-                        <input type="hidden" name="P_GOODS" value={pgData?.productName || "수강등록"} />
-                        <input type="hidden" name="P_UNAME" value={pgData?.buyername || ""} />
-                        <input type="hidden" name="P_MOBILE" value={pgData?.buyertel || ""} />
-                        <input type="hidden" name="P_EMAIL" value={pgData?.buyeremail || ""} />
-                        <input type="hidden" name="P_RESERVED" value="centerCd=Y&amt_hash=Y" />
-                        <input type="hidden" name="P_LANG" value="ko" />
-                        <input type="hidden" name="P_CHARSET" value="utf8" />
-                        <input type="hidden" name="P_NOTI" value={pgData ? `${pgData.oid}|${encodeURIComponent(pgData.buyername)}|${pgData.buyertel}|${pgData.buyeremail}|${watchKlass}|true` : ""} />
-                        <input type="hidden" name="P_NEXT_URL" value={typeof window !== 'undefined' ? `${process.env.NEXT_PUBLIC_CLIENT_URL || window.location.origin}/api/payment/mobile/callback` : ""} />
-                        <input type="hidden" name="P_NOTI_URL" value={typeof window !== 'undefined' ? `${process.env.NEXT_PUBLIC_CLIENT_URL || window.location.origin}/api/payment/mobile/noti` : ""} />
-                        <input type="hidden" name="P_TIMESTAMP" value={pgData?.P_TIMESTAMP || ""} />
-                        <input type="hidden" name="P_CHKFAKE" value={pgData?.P_CHKFAKE || ""} />
                     </form>
                 </div>
             </div>
