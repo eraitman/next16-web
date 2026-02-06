@@ -10,7 +10,7 @@ const MENU_ITEMS = [
     { label: '홈', href: '/' },
     { label: '벼랑영어?', href: '/introduction' },
     { label: '과정안내', href: '/course' },
-    { label: '수강효과', href: '/review/list' },
+    { label: '수강효과', href: '/review' },
     { label: '수강요건', href: '/requirement' },
     { label: '수강등록', href: '/enrollment' },
 ];

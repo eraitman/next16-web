@@ -139,23 +139,23 @@ export function BoardList({ activePostId }: { activePostId?: number }) {
                         {list.map((post: Post, idx: number) => {
                             const displayIdx = pageCount - (pageNo - 1) * 12 - idx;
                             const isSelected = post.id === activePostId;
+                            const postUrl = `/review/view?pageNo=${pageNo}&id=${post.id}`;
 
                             return (
                                 <tr
                                     key={post.id}
                                     className={`group hover:bg-brand-gray transition-colors cursor-pointer ${isSelected ? 'bg-brand-yellow/10' : ''}`}
-                                    onClick={() => router.push(`/review/view?pageNo=${pageNo}&id=${post.id}`)}
-                                    role="button"
-                                    tabIndex={0}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter" || e.key === " ") {
-                                            router.push(`/review/view?pageNo=${pageNo}&id=${post.id}`);
-                                        }
-                                    }}
+                                    onClick={() => router.push(postUrl)}
                                 >
                                     <td className="px-6 py-4 text-center text-xs font-bold text-gray-400">{displayIdx}</td>
-                                    <td className={`px-6 py-4 font-bold text-sm tracking-tight ${isSelected ? 'text-brand-blue underline decoration-brand-yellow' : 'text-brand-black group-hover:text-brand-blue'}`}>
-                                        {post.title}
+                                    <td className="px-6 py-4">
+                                        <Link
+                                            href={postUrl}
+                                            className={`font-bold text-sm tracking-tight block w-full ${isSelected ? 'text-brand-blue underline decoration-brand-yellow' : 'text-brand-black group-hover:text-brand-blue'}`}
+                                            onClick={(e) => e.stopPropagation()} // Let the TR handler work too, but technically this is the SEO link
+                                        >
+                                            {post.title}
+                                        </Link>
                                     </td>
                                     <td className="px-6 py-4 text-xs font-black text-brand-blue uppercase">{post.author}</td>
                                     <td className="px-6 py-4 text-center text-xs text-gray-400 font-bold font-mono">

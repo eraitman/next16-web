@@ -18,6 +18,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://cliffenglish.com'),
   title: {
     default: "벼랑영어 | 단호, 정직, 솔직한 성과",
     template: "%s | 벼랑영어"
