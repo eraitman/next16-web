@@ -2,17 +2,24 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1D1D1B;
+  --foreground: #1A1A1A;
   
   /* Brand Colors from RULES.md */
   --brand-yellow: #FFCD00;
   --brand-blue: #00589B;
-  --brand-black: #1D1D1B;
-  --brand-gray: #F5F5F5;
+  --brand-black: #1A1A1A;
+  --brand-gray: #F8F9FA;
   
-  /* Typography Scale */
+  /* Typography Scale from RULES.md */
   --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-pretendard: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  
+  --h1-size: 32px;
+  --h2-size: 24px;
+  --body-size: 16.5px;
+  --caption-size: 14px;
+  
+  --letter-spacing-kr: -0.015em;
 }
 
 @theme inline {
@@ -24,22 +31,58 @@
   --color-brand-gray: var(--brand-gray);
   
   --font-sans: var(--font-pretendard);
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  
+  --font-pretendard: var(--font-pretendard);
   --font-inter: var(--font-inter);
+
+  --spacing-section: 80px;
+  --spacing-section-lg: 120px;
+  --spacing-para: 32px;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-pretendard);
+  font-size: var(--body-size);
+  line-height: 1.75;
+  letter-spacing: var(--letter-spacing-kr);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Authority-driven typography */
-h1, h2, h3, h4, h5, h6 {
+/* Editorial UX Utilities */
+.editorial-container {
+  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+h1 {
+  font-size: var(--h1-size);
   font-weight: 700;
+  line-height: 1.3;
   letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--h2-size);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+/* Authority-driven spacing */
+section {
+  padding-top: var(--spacing-section);
+  padding-bottom: var(--spacing-section);
+}
+
+@media (min-width: 768px) {
+  section {
+    padding-top: var(--spacing-section-lg);
+    padding-bottom: var(--spacing-section-lg);
+  }
 }

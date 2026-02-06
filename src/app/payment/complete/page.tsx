@@ -51,10 +51,10 @@ function PaymentCompleteContent() {
                             <div>
                                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">Bank Account</span>
                                 <div className="text-xl font-bold text-gray-800">
-                                    카카오뱅크 <br />
-                                    <span className="text-2xl font-black text-brand-black tracking-tight">3333-03-3665313</span>
+                                    KEB하나은행 <br />
+                                    <span className="text-2xl font-black text-brand-black tracking-tight">164-910059-42304</span>
                                 </div>
-                                <div className="text-sm text-gray-500 mt-1">예금주: 김형섭(벼랑영어)</div>
+                                <div className="text-sm text-gray-500 mt-1">예금주: (주)티랑-벼랑영어</div>
                             </div>
                             <hr className="border-brand-yellow/30" />
                             <div>

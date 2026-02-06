@@ -35,18 +35,18 @@ export function Header() {
                 scrolled ? 'bg-white/90 backdrop-blur-md border-gray-200 py-2' : 'bg-transparent py-4'
             )}
         >
-            <div className="container mx-auto px-4 md:px-6">
+            <div className="container mx-auto px-6 max-w-7xl">
                 <nav className="flex items-center justify-between">
                     {/* Logo - Authentic & Firm */}
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <div className="bg-brand-yellow px-2 py-1 transform transition-transform group-hover:scale-105">
-                            <span className="text-brand-black font-black text-xl tracking-tighter">CLIFF</span>
+                    <Link href="/" className="flex items-center gap-1.5 group">
+                        <div className="bg-brand-black px-2 py-0.5 transition-transform group-hover:scale-105">
+                            <span className="text-white font-black text-xl tracking-tighter">CLIFF</span>
                         </div>
-                        <span className="font-bold text-brand-black text-lg tracking-tight">ENGLISH</span>
+                        <span className="font-black text-brand-black text-xl tracking-tighter">ENGLISH</span>
                     </Link>
 
                     {/* Desktop Menu - Editorial Style */}
-                    <ul className="hidden md:flex items-center gap-8">
+                    <ul className="hidden md:flex items-center gap-10">
                         {MENU_ITEMS.map((item) => {
                             const isActive = pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href));
                             return (
@@ -54,15 +54,15 @@ export function Header() {
                                     <Link
                                         href={item.href}
                                         className={cn(
-                                            'text-sm font-bold tracking-tight transition-colors relative py-1',
+                                            'text-sm font-bold tracking-tighter transition-colors relative py-1 uppercase',
                                             isActive
-                                                ? 'text-brand-blue'
-                                                : 'text-brand-black hover:text-brand-blue/80'
+                                                ? 'text-brand-black'
+                                                : 'text-brand-black/40 hover:text-brand-black'
                                         )}
                                     >
                                         {item.label}
                                         {isActive && (
-                                            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-yellow animate-in fade-in slide-in-from-left duration-300" />
+                                            <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand-yellow" />
                                         )}
                                     </Link>
                                 </li>
