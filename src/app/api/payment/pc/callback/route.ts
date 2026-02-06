@@ -8,6 +8,15 @@ import { NextRequest, NextResponse } from 'next/server';
  */
 export async function POST(req: NextRequest) {
     try {
+        // Get base URL from environment variable or fallback to production URL
+        const baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL || 'https://web.cliffenglish.co.kr';
+
+        console.log('=== Callback Base URL ===');
+        console.log('NEXT_PUBLIC_CLIENT_URL:', process.env.NEXT_PUBLIC_CLIENT_URL);
+        console.log('req.nextUrl.origin:', req.nextUrl.origin);
+        console.log('Using baseUrl:', baseUrl);
+        console.log('========================');
+
         const formData = await req.formData();
 
         // Extract Inicis callback parameters
@@ -30,7 +39,7 @@ export async function POST(req: NextRequest) {
         if (resultCode !== '0000') {
             console.error('Payment failed at Inicis:', resultMsg);
             return NextResponse.redirect(
-                `${req.nextUrl.origin}/payment?error=${encodeURIComponent(resultMsg as string)}`,
+                `${baseUrl}/payment?error=${encodeURIComponent(resultMsg as string)}`,
                 303
             );
         }
@@ -96,7 +105,7 @@ export async function POST(req: NextRequest) {
 
         if (!validationResult?.result) {
             return NextResponse.redirect(
-                `${req.nextUrl.origin}/payment?error=${encodeURIComponent(validationResult?.message || '결제 승인 실패')}`,
+                `${baseUrl}/payment?error=${encodeURIComponent(validationResult?.message || '결제 승인 실패')}`,
                 303
             );
         }
@@ -116,8 +125,9 @@ export async function POST(req: NextRequest) {
 
     } catch (error: any) {
         console.error('Inicis PC Callback Error:', error);
+        const baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL || 'https://web.cliffenglish.co.kr';
         return NextResponse.redirect(
-            `${req.nextUrl.origin}/payment?error=${encodeURIComponent('결제 처리 중 오류가 발생했습니다.')}`,
+            `${baseUrl}/payment?error=${encodeURIComponent('결제 처리 중 오류가 발생했습니다.')}`,
             303
         );
     }
