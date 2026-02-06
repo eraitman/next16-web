@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
     try {
+        // Get base URL from environment variable or fallback to production URL
+        const baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL || 'https://web.cliffenglish.co.kr';
+
+        console.log('=== Mobile Callback Base URL ===');
+        console.log('NEXT_PUBLIC_CLIENT_URL:', process.env.NEXT_PUBLIC_CLIENT_URL);
+        console.log('req.nextUrl.origin:', req.nextUrl.origin);
+        console.log('Using baseUrl:', baseUrl);
+        console.log('================================');
+
         const formData = await req.formData();
         const P_STATUS = formData.get('P_STATUS');
         const P_RMESG1 = formData.get('P_RMESG1');
@@ -12,7 +21,7 @@ export async function POST(req: NextRequest) {
         const P_OID = formData.get('P_OID');
 
         if (P_STATUS !== '00') {
-            return NextResponse.redirect(`${req.nextUrl.origin}/payment?error=${encodeURIComponent(P_RMESG1 as string)}`, 303);
+            return NextResponse.redirect(`${baseUrl}/payment?error=${encodeURIComponent(P_RMESG1 as string)}`, 303);
         }
 
         const params = new URLSearchParams({
@@ -23,9 +32,10 @@ export async function POST(req: NextRequest) {
             type: 'MOBILE'
         });
 
-        return NextResponse.redirect(`${req.nextUrl.origin}/payment/complete?${params.toString()}`, 303);
+        return NextResponse.redirect(`${baseUrl}/payment/complete?${params.toString()}`, 303);
     } catch (error) {
         console.error('Inicis Mobile Callback Error:', error);
-        return NextResponse.redirect(`${req.nextUrl.origin}/payment?error=callback_error`, 303);
+        const baseUrl = process.env.NEXT_PUBLIC_CLIENT_URL || 'https://web.cliffenglish.co.kr';
+        return NextResponse.redirect(`${baseUrl}/payment?error=callback_error`, 303);
     }
 }
