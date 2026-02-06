@@ -11,7 +11,7 @@ import {
 
 function makeClient() {
     const httpLink = new HttpLink({
-        uri: process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4000/graphql",
+        uri: process.env.NEXT_PUBLIC_SERVER_URL || "https://server.cliffenglish.co.kr/graphql",
         // Opt-out of Next.js fetch caching
         fetchOptions: { cache: "no-store" },
     });

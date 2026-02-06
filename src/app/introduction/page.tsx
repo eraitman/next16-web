@@ -132,15 +132,19 @@ export default function IntroductionPage() {
                                             국내에는 영어 강사를 위한 TESOL 과정이 아주 많습니다. 그러나 단기과정이 아니라 석사과정(Master's)으로 운영하는 학교는 한국외국어대학이 유일합니다. 벼랑영어 주 강사들이 Master’s 과정을 졸업한 외국어대 TESOL의 경쟁률은 10: 3 정도이고 학생 대부분이 영어 교육에 관련된 일을 하고 있습니다. 그야말로 영어를 가르치는 것을 정말 좋아하고 자질이 충만한 사람들만 모인다고 생각하면 됩니다. 영어를 가르치고 배우기를 좋아하는 강사와 그냥 직업적으로 강의하는 강사는 많은 차이를 가져옵니다.
                                         </p>
                                         <hr className="border-gray-200" />
-                                        <p>
-                                            <strong className="text-brand-blue">둘째,</strong> 한국인들이 영어를 배우는 고충을 정확히 알고 있습니다.<br />
-                                            본인들이 겪었기 때문입니다. 아무리 열심히 해도 영어가 늘지 않는 이유를 들여다보면
+                                        <div className="space-y-4">
+                                            <p>
+                                                <strong className="text-brand-blue">둘째,</strong> 한국인들이 영어를 배우는 고충을 정확히 알고 있습니다.<br />
+                                                본인이 겪었기 때문입니다. 아무리 열심히 해도 영어가 늘지 않는 이유를 들여다보면
+                                            </p>
                                             <ul className="list-disc pl-5 my-2 text-sm text-gray-600">
                                                 <li>[한국어, 영어] 두 언어에 내재한 언어원리의 다름</li>
                                                 <li>두 문화의 차이에 의한 접근, 소통, 지속의 어려움에 있다고 봐도 과언이 아닙니다.</li>
                                             </ul>
-                                            본인이 영어를 잘한다고 영어를 제대로 가르칠 수 있는 것은 아닙니다. 벼랑영어 강사는 철저히 ‘문리 중심, 언어습득’ 관점에서 강의합니다.
-                                        </p>
+                                            <p>
+                                                본인이 영어를 잘한다고 영어를 제대로 가르칠 수 있는 것은 아닙니다. 벼랑영어 강사는 철저히 ‘문리 중심, 언어습득’ 관점에서 강의합니다.
+                                            </p>
+                                        </div>
                                         <hr className="border-gray-200" />
                                         <p>
                                             <strong className="text-brand-blue">셋째,</strong> 영어를 학원에서 완성해준다는 것은 거짓말임을 깨우쳐 알고 있습니다.<br />
@@ -324,7 +328,7 @@ function OperationCard({ title, children }: { title: string, children: React.Rea
     return (
         <div className="bg-gray-50 border border-gray-100 p-6 rounded-xl hover:shadow-md transition-shadow">
             <h4 className="font-bold text-lg text-brand-black mb-3">{title}</h4>
-            <p className="text-sm text-gray-600 leading-relaxed">{children}</p>
+            <div className="text-sm text-gray-600 leading-relaxed">{children}</div>
         </div>
     )
 }
@@ -333,7 +337,7 @@ function AdviceCard({ title, children }: { title: string, children: React.ReactN
     return (
         <div className="bg-white border border-gray-200 p-6 rounded-xl hover:border-brand-yellow transition-colors">
             <h4 className="font-bold text-base text-brand-black mb-3">{title}</h4>
-            <p className="text-sm text-gray-600 leading-relaxed">{children}</p>
+            <div className="text-sm text-gray-600 leading-relaxed">{children}</div>
         </div>
     )
 }

@@ -2,9 +2,10 @@ import React from "react";
 import { Metadata } from "next";
 import { ApolloWrapper } from "@/lib/apollo/ApolloWrapper";
 import { BoardView } from "@/components/board/BoardView";
-import { ClientMotionDiv } from "@/components/common/ClientMotion";
 import { getClient } from "@/lib/apollo/apolloClient";
 import { gql } from "@apollo/client";
+import { BackButton } from "../../../components/common/BackButton";
+import { ClientMotionDiv } from "../../../components/common/ClientMotion";
 
 const GET_POST_FOR_METADATA = gql`
   query post($id: Int!) {
@@ -109,12 +110,7 @@ export default async function ReviewViewPage({
                         animate={{ opacity: 1 }}
                         className="mb-8"
                     >
-                        <button
-                            onClick={() => window.history.back()}
-                            className="text-xs font-black uppercase tracking-widest text-brand-blue flex items-center gap-2 hover:translate-x-[-4px] transition-transform"
-                        >
-                            ← Back to List
-                        </button>
+                        <BackButton />
                     </ClientMotionDiv>
 
                     <React.Suspense fallback={<div className="py-20 text-center font-bold text-gray-400">Loading post...</div>}>

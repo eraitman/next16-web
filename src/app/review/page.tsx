@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { ApolloWrapper } from "@/lib/apollo/ApolloWrapper";
 import { BoardList } from "@/components/board/BoardList";
-import { ClientMotionDiv } from "@/components/common/ClientMotion";
+import { ClientMotionDiv } from "../../components/common/ClientMotion";
 
 export const metadata: Metadata = {
     title: "수료 소감 | 벼랑영어",
