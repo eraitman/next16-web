@@ -623,6 +623,7 @@ function PaymentFormContent() {
 
                     {/* Mobile Form */}
                     <form id="mobile_payment_form" method="POST" action="https://mobile.inicis.com/smart/payment/">
+                        <input type="hidden" name="P_INI_PAYMENT" value="card" />
                         <input type="hidden" name="P_MID" value={pgData?.mid || ""} />
                         <input type="hidden" name="P_OID" value={pgData?.oid || ""} />
                         <input type="hidden" name="P_AMT" value="420000" />
@@ -630,11 +631,14 @@ function PaymentFormContent() {
                         <input type="hidden" name="P_UNAME" value={pgData?.buyername || ""} />
                         <input type="hidden" name="P_MOBILE" value={pgData?.buyertel || ""} />
                         <input type="hidden" name="P_EMAIL" value={pgData?.buyeremail || ""} />
+                        <input type="hidden" name="P_RESERVED" value="centerCd=Y&amt_hash=Y" />
+                        <input type="hidden" name="P_LANG" value="ko" />
+                        <input type="hidden" name="P_CHARSET" value="utf8" />
+                        <input type="hidden" name="P_NOTI" value={pgData ? `${pgData.oid}|${encodeURIComponent(pgData.buyername)}|${pgData.buyertel}|${pgData.buyeremail}|${watchKlass}|true` : ""} />
                         <input type="hidden" name="P_NEXT_URL" value={typeof window !== 'undefined' ? `${process.env.NEXT_PUBLIC_CLIENT_URL || window.location.origin}/api/payment/mobile/callback` : ""} />
                         <input type="hidden" name="P_NOTI_URL" value={typeof window !== 'undefined' ? `${process.env.NEXT_PUBLIC_CLIENT_URL || window.location.origin}/api/payment/mobile/noti` : ""} />
                         <input type="hidden" name="P_TIMESTAMP" value={pgData?.P_TIMESTAMP || ""} />
                         <input type="hidden" name="P_CHKFAKE" value={pgData?.P_CHKFAKE || ""} />
-                        <input type="hidden" name="P_RESERVED" value="centerCd=Y&amt_hash=Y" />
                     </form>
                 </div>
             </div>
